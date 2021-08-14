@@ -1,0 +1,60 @@
+package shsh;
+import java.util.Stack;
+
+public class StackY {
+
+	public static void main(String[] args) {
+		System.out.println("Stack 클래스를 사용해 데이터 삽입, 출력, 삭제 start");
+		
+		/**
+		 * - stack (스택) : LIFO 구조로 나중에 입력된 것이 먼저 출력되는 구조		 
+		 * - 자바에서는 Stack 클래스를 사용해서 객체를 생성 
+		 * - isEmpty : 스택 구조에서 데이터가 없는 상태 인지 확인
+		 * - push : 스택 구조에서 데이터를 삽입
+		 * - peek : 스택 구조에서 제일 마지막으로 저장된 요소를 반환
+		 * - search : 전달된 객체가 존재하는 위치의 인덱스를 반환 
+		 * - pop : 해당 스택의 제일 상단에 있는 요소를 반환하고, 해당 요소를 스택에서 제거
+		 * - clear : 스택에 저장된 데이터를 초기화
+		 * */
+
+		// 초기 Stack 객체 생성 실시 
+		Stack stack = new Stack();
+		System.out.println("빈상태? : " + stack.isEmpty());
+		System.out.println("");
+
+		// push 를 사용해 데이터 삽입 실시
+				stack.push(1); // 1 (제일 처음 저장)
+				stack.push(2); // 1 2
+				stack.push(3); // 1 2 3 형태로 저장됩니다 (마지막에 저장 : 최상단에 위치)
+				System.out.println("push : " + stack.toString());
+				System.out.println("size : " + stack.size());
+				System.out.println("");
+				
+				
+		// peek 를 사용해 제일 상단 (마지막에 저장된 데이터) 데이터를 확인 실시
+				System.out.println("peek : " + stack.peek());
+				System.out.println("");
+				
+				
+		// search 를 사용해 전달된 객체가 존재하는 위치의 인덱스를 확인 실시
+		// 제일 상단에 있는(제일 마지막으로 저장된) 요소의 위치부터 시작합니다 (1부터 인덱스 시작)		
+				System.out.println("3 값 인덱스 위치 : " + stack.search(3));
+				System.out.println("1 값 인덱스 위치 : " + stack.search(1));
+				System.out.println("");
+				
+				
+		// 반복문을 사용해서 스택에 저장되 데이터 출력 및 삭제 실시
+				while(!stack.isEmpty()) { // 스택 구조 데이터가 없을 때 까지 반복 실행
+					System.out.println("저장된 데이터 : " + stack.pop());			
+				}
+				System.out.println("");
+				
+				
+		// clear 를 사용해서 스택에 저장된 데이터 전체 초기화 (삭제) 실시
+				stack.clear();
+				System.out.println("clear : " + stack.toString());
+				System.out.println("");
+
+		}// 메인 종료
+
+ }// 클래스 종료
