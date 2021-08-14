@@ -1,0 +1,106 @@
+package shsh;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
+
+public class QueueY {
+
+	public static void main(String[] args) {
+		System.out.println("queue, linkedlist, FIFO");
+		System.out.println(" ");
+	      
+	      // 초기 변수 선언
+	      //int pro_arr[] = {93, 30, 55}; // [1번]
+	      int pro_arr[] = {95, 90, 99, 99, 80, 99}; // [2번]
+	      //int sp_arr[] = {1, 30, 5}; // [1번]
+	      int sp_arr[] = {1, 1, 1, 1, 1, 1}; // [2번]
+	      
+	      
+	      // 결과 출력 메소드 호출
+	      System.out.println("결과 : " + Arrays.toString(solution(pro_arr, sp_arr)));
+	            
+	   }//메인 종료
+	   
+	   public static int[] solution(int[] progresses, int[] speeds) {
+	            
+	      // 인풋으로 들어온 데이터 확인
+	      System.out.println("progresses : " + Arrays.toString(progresses));
+	      System.out.println("speeds : " + Arrays.toString(speeds));      
+	      System.out.println("");
+	      
+	     // 참고
+	      /**
+	       * 1. 93   30   55
+	       *    7    3    9
+	       *    =============
+	       *    7일째 2개
+	       *    9일째 1개
+	       *    
+	       * 2. 95   90   99   99   80   99
+	       *    5    10    1    1   20    1
+	       *    ============================
+	       *    5일째 1개
+	       *    10일째 3개
+	       *    20일째 2       
+	       * */
+	      
+	      // 큐배열을 선언 (FIFO 구조)
+	      LinkedList<Integer> queue = new LinkedList<>(); // 큐 생성
+	      
+	      
+	      // for 반복문을 돌면서 100% 까지 걸리는 일자 계산
+	      for (int i=0; i<progresses.length; i++) {
+	         int nowValue = progresses[i]; //현재 작업된 퍼센트 [ex : [93] / [30]]
+	         int proUpdate = speeds[i]; // 하루에 작업 진행 상황 [ex : [1] / [30]]
+	         
+	         int day = 100 - nowValue; // [7] / [70] 
+	         int checkDay = (day / proUpdate); // [7 / 1] / [70 / 30]
+	         int checkMod = (day % proUpdate); // [7 % 1] / [70 % 30]
+	         if(checkMod > 0) checkMod = 1; // 나머지 값이 0보다 크면 1값으로 교체
+	         int totalDay = checkDay + checkMod;
+	         
+	         // 큐에 데이터 삽입
+	         queue.add(totalDay);
+	      }
+	      System.out.println("queue : " + queue.toString());
+	      System.out.println("size : " + queue.size());
+	      System.out.println("");
+	      
+	      
+	      // 큐에 삽입된 데이터 크기를 확인 및 리턴 결과를 담기 위한 변수 선언
+	      ArrayList<Integer> list = new ArrayList();
+	      int saveValue = 0;
+	      int cnt = 1;
+	      
+	      
+	      /* while 문을 사용해서 큐가 전부 빌때까지 반복문을 수행
+	       * poll : 해당 큐의 맨 앞에 있는 요소를 반환하고, 해당 요소를 큐에서 제거
+	       */
+	      boolean stopFlag = false;
+	      while(!queue.isEmpty()) { // 큐에 데이터가 있을 경우 반복 수행 실시
+	         if (stopFlag == false) { // 처음 데이터만 넣고 비교를 수행하기 위해서 플래그 선언
+	            saveValue = queue.poll();            
+	            stopFlag = true;
+	         }  
+	         else {
+	            int data = queue.poll();            
+	            if(saveValue < data) { // 저장된 데이터가 다음 데이터 보다 작은 경우                                          
+	               list.add(cnt);
+	               cnt = 1;
+	               
+	               saveValue = data;
+	               if(queue.isEmpty()) list.add(cnt); // 마지막 값일 경우 배열에 삽입
+	            }
+	            else {               
+	               cnt ++;         
+	               if(queue.isEmpty()) list.add(cnt); // 마지막 값일 경우 배열에 삽입
+	            }
+	         }         
+	      }
+	            
+	      // 결과 반환 실시 [스트림 사용해 >> list to int 배열]      
+	      return list.stream().mapToInt(Integer::intValue).toArray();   
+	   }
+
+	}//클래스 종료
