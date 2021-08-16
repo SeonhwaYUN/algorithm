@@ -1,0 +1,55 @@
+package shsh;
+
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Scanner;
+
+
+ public class BFS {
+	 
+	public static void main(String[] args)  {
+		int x, y, a, b, start;
+		Scanner sc = new  Scanner(System.in);
+		x = sc.nextInt(); //정점의 개수
+		bfs_Node node = new bfs_Node(x);
+		y = sc.nextInt(); //간선의 개수
+		for (int i = 0; i < y; i++) {
+			a = sc.nextInt();
+			b = sc.nextInt();
+			node.put(a,b);
+		}
+		
+		start = sc.nextInt();//시작점
+		node.bfs(start);
+		
+	}
+}
+ class bfs_Node {
+	 int[][]list, x;
+	 boolean[] visit;
+	 Queue<Integer> queue = new LinkedList<>();
+	 bfs_Node(int x) {
+		 list = new int[x][x];
+		 visit = new boolean[x];
+	 }
+	 void put(int a, int b) {
+		 list[a][b] = 1;
+		 list[b][a] = 1;
+	 }
+	 void bfs(int start) {
+		 visit[start] = true;
+		 queue.add(start);
+		 while (queue.size() !=0) {
+			 start = queue.poll();
+			 System.out.print(start + " ");
+			 for (int i = 0; i < visit.length; i++) {
+				 if (list[start][i] == 1 && visit[i] != true) {
+					 queue.add(i);
+					 visit[i]=true;
+				 }
+			 }
+		 }
+		 
+	 }
+ }
+
